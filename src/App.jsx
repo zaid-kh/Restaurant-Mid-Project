@@ -5,11 +5,13 @@ import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import List from "./pages/menu/List";
 import UserSuggest from "./pages/suggestion/UserSuggest";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <>
       <BrowserRouter>
+        <NavBar />
         <Routes>
           <Route path="/" element={<SignUp />} />
           <Route path="signup" element={<SignUp />} />
