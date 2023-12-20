@@ -7,6 +7,8 @@ import {
   styled,
   Paper,
   Button,
+  Container,
+  Box,
 } from "@mui/material";
 
 const SuggestionCardContainer = styled(Paper)({
@@ -22,7 +24,18 @@ const SuggestionCardContainer = styled(Paper)({
   },
 });
 
-export const SuggestionCard = ({ suggestion }) => {
+const getStatusColor = (status) => {
+  switch (status) {
+    case "accepted":
+      return "#4CAF50"; // Green color for accepted
+    case "rejected":
+      return "#F44336"; // Red color for rejected
+    default:
+      return "#FFC107"; // Yellow color for pending (default)
+  }
+};
+
+export const SuggestionCard = ({ suggestion, isAdmin = false }) => {
   const [showRecipe, setShowRecipe] = useState(false);
 
   const toggleRecipeVisibility = () => {
@@ -42,28 +55,45 @@ export const SuggestionCard = ({ suggestion }) => {
           />
           <ImageListItemBar
             title={suggestion.name}
-            subtitle={<span>by: {suggestion.userName}</span>}
+            subtitle={
+              <span>
+                by: {isAdmin ? suggestion.userName : "You"} - Status:{" "}
+                <Box
+                  component="span"
+                  sx={{
+                    display: "inline-block",
+                    bgcolor: getStatusColor(suggestion.status),
+                    borderRadius: "4px",
+                    px: 1,
+                    py: 0.5,
+                    color: "white",
+                  }}
+                >
+                  {suggestion.status}
+                </Box>{" "}
+              </span>
+            }
           />
         </ImageListItem>
         <div style={{ marginTop: "16px", textAlign: "center" }}>
           <Typography variant="h6" fontWeight={"bold"} color={"secondary"}>
             {suggestion.dishName}
           </Typography>
-          <Typography variant="body1" paragraph>
-            Ingredients:
-          </Typography>
-          {suggestion.ingredients.map((ingredient, index) => (
-            <Typography variant="body1" key={index}>
-              {ingredient}
-            </Typography>
-          ))}
-          {showRecipe && suggestion.recipe && (
-            <>
-              <Typography variant="body1" paragraph>
-                Recipe:
+          <Typography variant="body1">Ingredients:</Typography>
+          <Typography paragraph>
+            {suggestion.ingredients.map((ingredient, index) => (
+              <Typography variant="body2" key={index}>
+                {ingredient}
               </Typography>
-              <Typography variant="body1">{suggestion.recipe}</Typography>
-            </>
+            ))}
+          </Typography>
+          {showRecipe && suggestion.recipe && (
+            <Container>
+              <Typography variant="body1">Recipe:</Typography>
+              <Typography variant="body2" paragraph>
+                {suggestion.recipe}
+              </Typography>
+            </Container>
           )}
           {suggestion.recipe && (
             <Button onClick={toggleRecipeVisibility} color="primary">
