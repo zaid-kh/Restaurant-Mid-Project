@@ -3,19 +3,13 @@ import { styled } from "@mui/system";
 import { Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
-// Customize the background image URL
-const backgroundImage = "url('https://example.com/your-image.jpg')";
-
 const HeroContainer = styled("div")(() => ({
+  backgroundColor: "transparent",
   position: "relative",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  height: "60vh",
-  backgroundImage,
-  backgroundSize: "cover",
-  backgroundRepeat: "no-repeat",
-  backgroundPosition: "center",
+  height: "95vh",
   textAlign: "center",
 }));
 
@@ -30,6 +24,20 @@ const HeroButton = styled(Button)({
 const Home = () => {
   return (
     <HeroContainer>
+      <video
+        autoPlay
+        loop
+        muted
+        controls={false}
+        style={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+        }}
+      >
+        <source src="../../public/hero_vid.mp4" type="video/mp4" />
+      </video>
       <HeroText>
         <Typography variant="h2" gutterBottom>
           Your Catchy Title

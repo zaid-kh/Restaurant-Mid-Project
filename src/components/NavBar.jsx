@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { styled, useTheme } from "@mui/system";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const DrawerContainer = styled("div")(({ theme }) => ({
   width: 240,
@@ -32,6 +32,7 @@ const NavbarContainer = styled("div")(({ theme }) => ({
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -67,6 +68,9 @@ const Navbar = () => {
             variant="h6"
             component="div"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            onClick={() => {
+              navigate("/");
+            }}
           >
             Il Ristorante
           </Typography>
@@ -84,6 +88,9 @@ const Navbar = () => {
                 variant="h6"
                 component="div"
                 sx={{ flexGrow: 1, textAlign: "center" }}
+                onClick={() => {
+                  navigate("/");
+                }}
               >
                 Il Ristorante
               </Typography>
