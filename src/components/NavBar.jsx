@@ -16,6 +16,7 @@ import {
 import { styled, useTheme } from "@mui/system";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useNavigate } from "react-router-dom";
+import theme from "../theme";
 
 const DrawerContainer = styled("div")(({ theme }) => ({
   width: 240,
@@ -33,7 +34,6 @@ const NavbarContainer = styled("div")(({ theme }) => ({
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
-  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleDrawerToggle = () => {
@@ -108,7 +108,7 @@ const Navbar = () => {
             {navLinks.map((item) => (
               <Button
                 key={item.label}
-                sx={{ color: "#fff" }}
+                sx={{ color: theme.palette.text.secondary }}
                 component={Link}
                 to={item.to}
               >

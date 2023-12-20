@@ -11,7 +11,7 @@ const HeroContainer = styled("div")(() => ({
   justifyContent: "center",
   height: "95vh",
   textAlign: "center",
-  color: theme.palette.text.primary,
+  color: theme.palette.text.secondary,
   overflow: "hidden", // Ensure the overlay covers the entire video
 }));
 
