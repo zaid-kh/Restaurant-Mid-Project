@@ -30,7 +30,7 @@ const UserSuggest = ({ uid }) => {
 
   //   setSuggestions(mockSuggestions);
 
-  uid = "Ox9Y6Q8Wb6fQO6L6KakHFRxTCGB2";
+  uid = "d0XXLDjIBEWdnafHZWeD0nCMluz1";
   useEffect(() => {
     // start ingredients with 2 empty elements
     setIngredients(["", ""]);

@@ -95,6 +95,7 @@ export const SuggestionCard = ({ suggestion, isAdmin = false }) => {
               </Typography>
             </Container>
           )}
+          {/* //todo: use expand more ExpandMoreIcon / ExpandMore */}
           {suggestion.recipe && (
             <Button onClick={toggleRecipeVisibility} color="primary">
               {showRecipe ? "Hide Recipe" : "Show Recipe"}

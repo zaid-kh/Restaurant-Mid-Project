@@ -1,9 +1,11 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { db } from "../../config/firebase";
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
+import MenuItem from "./MenuItem";
+import theme from "../../theme";
 
-const DishList = () => {
+const MenuList = () => {
   const [dishes, setDishes] = useState([]);
 
   useEffect(() => {
@@ -21,19 +23,22 @@ const DishList = () => {
   }, []);
 
   return (
-    <div>
-      <Grid container spacing={2}>
-        {dishes.map((dish) => (
-          <Grid item xs={12} sm={6} md={4} key={dish.name}>
-            <div>
-              <Typography variant="h6">{dish.name}</Typography>
-              <Typography variant="body1">{dish.ingredients.join()}</Typography>
-            </div>
-          </Grid>
-        ))}
-      </Grid>
-    </div>
+    <Grid
+      padding={2}
+      container
+      spacing={2}
+      style={{
+        backgroundColor: "#433",
+        marginTop: "0", // Adjust the margin based on your navigation height
+      }}
+    >
+      {dishes.map((dish) => (
+        <Grid item xs={12} sm={6} md={4} key={dish.name}>
+          <MenuItem dish={dish} />
+        </Grid>
+      ))}
+    </Grid>
   );
 };
 
-export default DishList;
+export default MenuList;
