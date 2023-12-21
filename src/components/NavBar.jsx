@@ -44,7 +44,6 @@ const Navbar = () => {
     { label: "Home", to: "/" },
     { label: "Menu", to: "/menu-list" },
     { label: "Suggest", to: "/suggest" },
-    { label: "Contact", to: "/contact" },
     { label: "Sign In", to: "/signin" },
   ];
 
