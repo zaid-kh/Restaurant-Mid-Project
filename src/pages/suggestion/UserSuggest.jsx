@@ -11,8 +11,9 @@ import {
   Paper,
 } from "@mui/material";
 import { SuggestionCard } from "../../components/SuggestionCard";
+import { auth } from "../../config/firebase";
 
-const UserSuggest = ({ uid }) => {
+const UserSuggest = () => {
   const {
     suggestions,
     setSuggestions,
@@ -28,14 +29,12 @@ const UserSuggest = ({ uid }) => {
     getUserSuggestions,
   } = useSuggest();
 
-  //   setSuggestions(mockSuggestions);
-
-  uid = "d0XXLDjIBEWdnafHZWeD0nCMluz1";
   useEffect(() => {
     // start ingredients with 2 empty elements
     setIngredients(["", ""]);
     // Fetch the suggestions from firestore
-    getUserSuggestions(uid).then((suggestions) => {
+    if (!auth.currentUser) return;
+    getUserSuggestions(auth.currentUser.uid).then((suggestions) => {
       if (suggestions) {
         setSuggestions(suggestions);
       }
@@ -170,9 +169,13 @@ const UserSuggest = ({ uid }) => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              disabled={loading}
+              disabled={loading || !auth.currentUser}
             >
-              {loading ? "Submitting Dish..." : "Submit"}
+              {!auth.currentUser
+                ? "Please log in to submit a suggestion"
+                : loading
+                ? "Submitting Dish..."
+                : "Submit"}
             </Button>
             {error && <Typography color="error">{error}</Typography>}
           </Box>
@@ -193,7 +196,9 @@ const UserSuggest = ({ uid }) => {
           </Grid>
         ) : (
           <Typography variant="body1">
-            No previous suggestions found.
+            {auth.currentUser
+              ? "You have not made any suggestions yet."
+              : "Please log in to see your suggestions."}
           </Typography>
         )}
       </Grid>
