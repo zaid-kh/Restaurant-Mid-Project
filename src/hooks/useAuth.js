@@ -2,6 +2,7 @@ import { useState } from "react";
 import { auth, db, googleProvider } from "../config/firebase";
 import {
   createUserWithEmailAndPassword,
+  getAdditionalUserInfo,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -66,7 +67,6 @@ const useAuth = () => {
       await createUserWithEmailAndPassword(auth, emailInput, passwordInput);
       // add user to firestore
       await addUserToFirestore(auth.currentUser);
-      console.log("signUp: auth: ", auth.currentUser.email);
     } catch (error) {
       setError(error.message);
       console.error(error);
@@ -79,10 +79,6 @@ const useAuth = () => {
     try {
       setLoading(true);
       await signInWithEmailAndPassword(auth, emailInput, passwordInput);
-      console.log(
-        "signInWithEmailAndPassword: auth: ",
-        auth?.currentUser?.email
-      );
     } catch (error) {
       setError(error.message);
       console.error(error);
@@ -94,10 +90,11 @@ const useAuth = () => {
   const signInWithGoogle = async () => {
     try {
       setLoading(true);
-      await signInWithPopup(auth, googleProvider);
+      const result = await signInWithPopup(auth, googleProvider);
       // if user does not exist in firestore, add user to firestore
-      await addUserToFirestore(auth.currentUser);
-      console.log("signInWithGoogle: auth: ", auth?.currentUser?.email);
+      if (getAdditionalUserInfo(result)?.isNewUser) {
+        await addUserToFirestore(result.user);
+      }
     } catch (error) {
       setError(error.message);
       console.error(error);
@@ -110,7 +107,6 @@ const useAuth = () => {
     try {
       setLoading(true);
       await signOut(auth);
-      console.log("logOut: auth: ", auth?.currentUser?.email);
     } catch (error) {
       setError(error.message);
       console.error(error);

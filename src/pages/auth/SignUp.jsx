@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { Link as RouteLink } from "react-router-dom";
+import { Link as RouteLink, useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -30,15 +30,21 @@ export default function SignUp() {
     handlePasswordChange,
   } = useAuth();
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Call the signUp method from the useAuth hook
     await signUp();
+    // Redirect to the home page
+    navigate("/");
   };
 
   const handleGoogleSignIn = async () => {
     // Call the signInWithGoogle method from the useAuth hook
     await signInWithGoogle();
+    // Redirect to the home page
+    navigate("/");
   };
 
   return (

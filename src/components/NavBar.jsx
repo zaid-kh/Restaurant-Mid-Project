@@ -17,6 +17,7 @@ import { styled, useTheme } from "@mui/system";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link, useNavigate } from "react-router-dom";
 import theme from "../theme";
+import { auth } from "../config/firebase";
 
 const DrawerContainer = styled("div")(({ theme }) => ({
   width: 240,
@@ -46,10 +47,21 @@ const Navbar = () => {
     { label: "Suggest", to: "/suggest" },
     { label: "Sign In", to: "/signin" },
   ];
+  // signedin navlinks
+  const signedInNavlinks = [
+    { label: "Home", to: "/" },
+    { label: "Menu", to: "/menu-list" },
+    { label: "Suggest", to: "/suggest" },
+    { label: "Sign Out", to: "/signout" },
+  ];
+  let links = navLinks;
+  auth.currentUser ? (links = signedInNavlinks) : (links = navLinks);
+  console.log("links: ", links);
 
   const renderNavLinks = () => (
     <List>
-      {navLinks.map((item) => (
+      {/* if user signed in render signedInNavlinks */}
+      {links.map((item) => (
         <ListItem key={item.label} disablePadding>
           <ListItemButton component={Link} to={item.to}>
             <ListItemText primary={item.label} />
@@ -104,7 +116,7 @@ const Navbar = () => {
             </>
           )}
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navLinks.map((item) => (
+            {links.map((item) => (
               <Button
                 key={item.label}
                 sx={{ color: theme.palette.text.secondary }}
