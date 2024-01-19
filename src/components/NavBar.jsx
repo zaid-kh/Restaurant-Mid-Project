@@ -56,7 +56,6 @@ const Navbar = () => {
   ];
   let links = navLinks;
   auth.currentUser ? (links = signedInNavlinks) : (links = navLinks);
-  console.log("links: ", links);
 
   const renderNavLinks = () => (
     <List>

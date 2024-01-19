@@ -21,7 +21,6 @@ const useSuggest = () => {
   const [loading, setLoading] = useState(false);
 
   const addSuggestion = async (uid) => {
-    console.log("uid: ", uid);
     try {
       setLoading(true);
       if (!dishNameInput) {
@@ -43,7 +42,6 @@ const useSuggest = () => {
         recipe: recipeInput,
         status: "pending",
       });
-      console.log("Document written with ID: ", docRef.id);
       // edit user document in users collection (add suggestion id to user's suggestions array)
       const userSuggestions = userDoc.data().suggestions;
       if (!userSuggestions) {
@@ -91,7 +89,6 @@ const useSuggest = () => {
   };
 
   const getUserSuggestions = async (uid) => {
-    console.log("in getUserSuggestions: uid: ", uid);
     // get suggestions' ids from user's document in users collection
     // get suggestions from suggestions collection using ids
 
@@ -99,7 +96,6 @@ const useSuggest = () => {
       setLoading(true);
       const userCollection = collection(db, "users");
       const userDoc = await getDoc(doc(userCollection, uid)).then((doc) => {
-        console.log("doc: ", doc.data());
         return doc;
       });
       if (!userDoc.exists()) {
@@ -119,13 +115,10 @@ const useSuggest = () => {
       const suggestionsSnapshot = await getDocs(
         query(suggestionsCollection, where("userID", "==", uid))
       );
-      console.log("suggestionsSnapshot: ", suggestionsSnapshot);
 
       const userSuggestionsData = suggestionsSnapshot.docs.map((doc) =>
         doc.data()
       );
-      console.log("userSuggestionsData: ", userSuggestionsData);
-      console.log("userSuggestions: ", userSuggestions);
       setSuggestions(userSuggestionsData);
     } catch (error) {
       setError(error.message);
